@@ -15,17 +15,17 @@ function mostrarGastoWeb(idElemento, gasto) {
     // Crear elementos div para cada propiedad del gasto y agregarlos al nuevoGastoDiv
     let descripcionDiv = document.createElement('div');
     descripcionDiv.classList.add('gasto-descripcion');
-    descripcionDiv.textContent = `Descripción del gasto: ${gasto.descripcion}`;
+    descripcionDiv.innerText = `Descripción del gasto: ${gasto.descripcion}`;
     nuevoGastoDiv.appendChild(descripcionDiv);
 
     let fechaDiv = document.createElement('div');
     fechaDiv.classList.add('gasto-fecha');
-    fechaDiv.textContent = `Fecha del gasto: ${new Date(gasto.fecha).toLocaleDateString()}`;
+    fechaDiv.innerText = `Fecha del gasto: ${new Date(gasto.fecha).toLocaleDateString()}`;
     nuevoGastoDiv.appendChild(fechaDiv);
 
     let valorDiv = document.createElement('div');
     valorDiv.classList.add('gasto-valor');
-    valorDiv.textContent = `Valor del gasto: ${gasto.valor} €`;
+    valorDiv.innerText = `Valor del gasto: ${gasto.valor} €`;
     nuevoGastoDiv.appendChild(valorDiv);
 
     let etiquetasDiv = document.createElement('div');
@@ -35,16 +35,18 @@ function mostrarGastoWeb(idElemento, gasto) {
     gasto.etiquetas.forEach(etiqueta => {
         let etiquetaSpan = document.createElement('span');
         etiquetaSpan.classList.add('gasto-etiquetas-etiqueta');
-        etiquetaSpan.textContent = etiqueta;
+        etiquetaSpan.innerText = etiqueta;
         etiquetasDiv.appendChild(etiquetaSpan);
+
+        nuevoGastoDiv.appendChild(etiquetasDiv);
     });
-
-    nuevoGastoDiv.appendChild(etiquetasDiv);
-
     // Agregar el nuevoGastoDiv al elemento contenedor
     elemento.appendChild(nuevoGastoDiv);
 }
 
+/**
+ * Exporta las funciones creadas aqui.
+ */
 export {
     mostrarDatoEnId,
     mostrarGastoWeb
