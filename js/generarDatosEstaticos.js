@@ -41,3 +41,49 @@ gesPres.listarGastos().forEach(gasto => {
     gesPresWeb.mostrarGastoWeb('listado-gastos-completo', gasto);
 });
 
+// Filtrar y mostrar el listado de gastos realizados en septiembre de 2021
+let gastosSeptiembre2021 = gesPres.filtrarGastos({
+    fechaDesde: "2021-09-01",
+    fechaHasta: "2021-09-30"
+});
+gastosSeptiembre2021.forEach(gasto => {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gasto);
+});
+
+// Filtrar y mostrar el listado de gastos de más de 50€
+let gastosMas50Euros = gesPres.filtrarGastos({
+    valorMinimo: 50
+});
+gastosMas50Euros.forEach(gasto => {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gasto);
+});
+
+// Filtrar y mostrar el listado de gastos de más de 200€ con etiqueta 'seguros'
+let gastosMas200EurosSeguros = gesPres.filtrarGastos({
+    valorMinimo: 200,
+    etiquetasTiene: ['seguros']
+});
+gastosMas200EurosSeguros.forEach(gasto => {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gasto);
+});
+
+// Filtrar y mostrar el listado de gastos con etiquetas 'comida' o 'transporte' de menos de 50€
+let gastosComidaTransporteMenos50Euros = gesPres.filtrarGastos({
+    valorMaximo: 50,
+    etiquetasTiene: ['comida', 'transporte']
+});
+gastosComidaTransporteMenos50Euros.forEach(gasto => {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gasto);
+});
+
+// Mostrar el total de gastos agrupados por día en el elemento HTML con id 'agrupacion-dia'
+let gastosAgrupadosDia = gesPres.agruparGastos('dia');
+gesPresWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gastosAgrupadosDia, 'día');
+
+// Mostrar el total de gastos agrupados por mes en el elemento HTML con id 'agrupacion-mes'
+let gastosAgrupadosMes = gesPres.agruparGastos('mes');
+gesPresWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', gastosAgrupadosMes, 'mes');
+
+// Mostrar el total de gastos agrupados por año en el elemento HTML con id 'agrupacion-anyo'
+let gastosAgrupadosAnyo = gesPres.agruparGastos('anyo');
+gesPresWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', gastosAgrupadosAnyo, 'año');
