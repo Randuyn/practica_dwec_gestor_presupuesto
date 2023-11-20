@@ -1,3 +1,5 @@
+import * as gesPres from "./gestionPresupuesto.js";
+
 function mostrarDatoEnId(idElemento, valor) {
     let el = document.getElementById(idElemento);
     // Establecer el contenido del elemento con el valor proporcionado
@@ -91,12 +93,64 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     // Agregar el nuevo elemento de agrupación al elemento contenedor
     elemento.appendChild(nuevaAgrupacionDiv);
 }
+function repintar() {
+    // Mostrar el presupuesto en div#presupuesto
+    let presupuestoHtml = gesPres.mostrarPresupuesto();
+    mostrarDatoEnId('presupuesto', presupuestoHtml);
+
+    // Mostrar los gastos totales en div#gastos-totales
+    let totalGastosHtml = `Total de gastos: ${gesPres.calcularTotalGastos()} €`;
+    mostrarDatoEnId('gastos-totales', totalGastosHtml);
+
+    // Mostrar el balance total en div#balance-total
+    let balanceHtml = `Balance actual: ${gesPres.calcularBalance()} €`;
+    mostrarDatoEnId('balance-total', balanceHtml);
+
+    // Obtener el elemento HTML donde mostrar los gastos
+    let listadoGastosCompleto = document.getElementById('listado-gastos-completo');
+
+    // Borrar el contenido existente para evitar duplicados
+    listadoGastosCompleto.innerHTML = '';
+
+    // Obtener la lista de gastos del objeto gestionPresupuesto (o como lo hayas llamado)
+    let listaGastos = gesPres.listarGastos();
+
+    // Iterar sobre la lista de gastos y mostrar cada uno usando la función mostrarGastoWeb
+    listaGastos.forEach(gasto => {
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+    });
+    
+
+}
+
+
+function actualizarPresupuestoWeb() {
+    // Pedir al usuario que introduzca un presupuesto mediante un prompt
+    let nuevoPresupuesto = prompt('Introduce el nuevo presupuesto:');
+    // Convertir el valor a número
+    let nuevoPresupuestoNumero = parseFloat(nuevoPresupuesto);
+    // Actualizar el presupuesto
+    let resultadoActualizacion = gesPres.actualizarPresupuesto(nuevoPresupuestoNumero);
+    // Verificar si la actualización fue exitosa
+    if (resultadoActualizacion >= 0) {
+        // Si fue exitosa, repintar la página con la información actualizada
+        repintar();
+    }
+}
+
+// Obtener el botón de actualizar presupuesto
+let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+
+// Asignar la función manejadora de eventos a la acción de hacer clic en el botón
+btnActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 
 /**
  * Exporta las funciones creadas aqui.
  */
 export {
-    mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarDatoEnId,
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb
 }
