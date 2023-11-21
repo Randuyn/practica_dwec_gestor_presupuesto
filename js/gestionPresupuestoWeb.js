@@ -93,6 +93,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     // Agregar el nuevo elemento de agrupación al elemento contenedor
     elemento.appendChild(nuevaAgrupacionDiv);
 }
+
+
 function repintar() {
     // Mostrar el presupuesto en div#presupuesto
     let presupuestoHtml = gesPres.mostrarPresupuesto();
@@ -119,8 +121,6 @@ function repintar() {
     listaGastos.forEach(gasto => {
         mostrarGastoWeb('listado-gastos-completo', gasto);
     });
-    
-
 }
 
 
@@ -143,6 +143,39 @@ let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 
 // Asignar la función manejadora de eventos a la acción de hacer clic en el botón
 btnActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
+// Función para manejar el evento de añadir un nuevo gasto
+function nuevoGastoWeb() { 
+    // Pedir al usuario la información necesaria
+    let descripcion = prompt("Introduce la descripción del gasto:");
+    let valorStr = prompt("Introduce el valor del gasto:");
+    let fechaStr = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd:");
+    let etiquetasStr = prompt("Introduce las etiquetas del gasto separadas por comas:");
+
+    // Convertir el valor a número
+    let valor = parseFloat(valorStr);
+
+    // Convertir la cadena de texto de etiquetas a un array
+    let etiquetas = etiquetasStr.split(',');
+
+    // Crear un nuevo gasto
+    let nuevoGasto = {
+        descripcion: descripcion,
+        valor: valor,
+        fecha: fechaStr,
+        etiquetas: etiquetas
+    };
+
+    // Añadir el gasto a la lista
+    gesPres.anyadirGasto(nuevoGasto);
+
+    // Llamar a la función repintar para actualizar la lista de gastos
+    repintar();
+}
+
+// Obtener el botón anyadirgasto y añadir el manejador de eventos
+let botonAnyadirGasto = document.getElementById('anyadirgasto');
+botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
 /**
  * Exporta las funciones creadas aqui.
