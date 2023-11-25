@@ -81,7 +81,7 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
 **** Plantilla para crear un formulario para añadir o modificar gastos
       En segundo lugar vamos a añadir el siguiente código HTML *al final* del ~<body>~ (justo antes del cierre de la etiqueta):
 
-      #+begin_src html
+      #+begin_src html  
         <template id="formulario-template">
             <form>
                 <div class="form-control">
